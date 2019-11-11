@@ -1,2 +1,29 @@
-<!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<l-loadmore  show type="{{loadingType}}">
+	<view slot="content" class="container">
+		<image class="top-theme" src="{{themeA.entrance_img}}" />
+		<swiper
+		 indicator-dots
+		 indicator-active-color="#157658"
+		 autoplay
+		 circular
+		 class="swiper"
+		>
+			<block wx:for="{{bannerB.items}}" wx:key="{{item.id}}">
+				<swiper-item>
+					<image src="{{item.img}}" class="swiper" />
+				</swiper-item>
+			</block>
+		</swiper>
+		<s-category-grid grid="{{grid}}" />
+		<image class="activity" src="{{ActivityD.entrance_img}}" />
+		<s-spu-scroll theme="{{themeE}}" spu-list="{{themeESpu}}" wx:if="{{themeE.online}}" />
+		<image class="quality" src="{{themeF.entrance_img}}" />
+		<s-hot-list banner="{{bannerG}}" />
+		<image class="fashion" src="{{themeF.entrance_img}}" />
+		<view class="spu-bottom">
+			<image class="spu-title" src="/images/home/spu-title.png" />
+			<l-water-flow generic:l-water-flow-item="s-spu-preview" />
+		</view>
+	</view>
+</l-loadmore>
+

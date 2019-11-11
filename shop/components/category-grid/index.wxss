@@ -1,0 +1,30 @@
+.container {
+  height: 320rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+.inner-container {
+  width: 730rpx;
+  height: 300rpx;
+  border: 1px dashed #dcebe6;
+}
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 150rpx;
+}
+.img {
+  width: 60rpx;
+  height: 60rpx;
+}
+.text {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #333333;
+}
