@@ -60,7 +60,7 @@
 					"id": 0,
 					"name": "pages/detail/detail",
 					"pathName": "pages/detail/detail",
-					"query": "pid=2",
+					"query": "pid=11",
 					"scene": null
 				}
 			]

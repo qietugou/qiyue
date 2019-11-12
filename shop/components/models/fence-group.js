@@ -9,6 +9,24 @@ export default class FenceGroup {
         this.skuList = spu.sku_list
         this.spu = spu
     }
+    getDefaultSku() {
+        const defaultSkuId = this.spu.default_sku_id
+        if (!defaultSkuId) {
+            return 
+        }
+        return this.skuList.find(s => s.id === defaultSkuId)
+    }
+    setCellStatusById(cellId, status) {
+        this.eachCell((cell) => {
+            if (cellId === cell.id) {
+                cell.status = status
+            }
+        })
+    }
+
+    setCellStatusByXY(x,y, status) {
+        this.fences[x].cells[y].status = status 
+    }
     initFences1() {
         const matrix = this._createMatrix(this.skuList)
         const fences = []

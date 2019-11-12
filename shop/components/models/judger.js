@@ -9,31 +9,44 @@ export default class Judger {
     skuPending
     constructor(fenceGroup) {
         this.fenceGroup = fenceGroup
-        this._initSkuPending()
         this._initPathDict()
+        this._initSkuPending()
     }
     _initSkuPending() {
         this.skuPending = new SkuPending()
+        const defaultSku = this.fenceGroup.getDefaultSku()
+        if (defaultSku) {
+           this._initSelectedCell(defaultSku)
+        }
+    }
+    _initSelectedCell(defaultSku) {
+        this.skuPending.init(defaultSku)
+        this.skuPending.pending.forEach(cell => {
+            this.fenceGroup.setCellStatusById(cell.id, CellStatus.SELECTED)
+            this.judger(null, null, null, true)
+        })
     }
     _initPathDict() {
         this.fenceGroup.skuList.forEach(element => {
             const skuCode = new SukCode(element.code);
             this.pathDict = this.pathDict.concat(skuCode.totalSegments)
         });
-        console.log( this.pathDict)
+        console.log(this.pathDict)
     }
 
-    judger({cell, x, y}) {
-        this._changeCurrentCellStatus(cell, x, y)
+    judger(cell, x, y, isInit = false) {
+        if (isInit === false) {
+            this._changeCurrentCellStatus(cell, x, y)
+        }
         this.fenceGroup.eachCell((cell, x, y) => {
             const path = this._findPoterbtialPath(cell, x, y)
             if (!path) {
                 return
             }
             if (this._isInDict(path)) {
-                this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+                this.fenceGroup.setCellStatusByXY(x, y, CellStatus.WAITING)
             } else {
-                this.fenceGroup.fences[x].cells[y].status = CellStatus.FORBIDDEN
+                this.fenceGroup.setCellStatusByXY(x, y, CellStatus.FORBIDDEN)
             }
         })
     }
@@ -51,7 +64,7 @@ export default class Judger {
                 }
                 const cellCode = this._getCellCode(cell.spec)
                 joiner.join(cellCode)
-            } else if(selectd) {
+            } else if (selectd) {
                 const selectCode = this._getCellCode(selectd.spec)
                 joiner.join(selectCode)
             }
@@ -62,13 +75,13 @@ export default class Judger {
         return spec.key_id + '-' + spec.value_id
     }
     _changeCurrentCellStatus(cell, x, y) {
+
         if (cell.status === CellStatus.WAITING) {
-            this.fenceGroup.fences[x].cells[y].status = CellStatus.SELECTED
+            this.fenceGroup.setCellStatusByXY(x, y, CellStatus.SELECTED)
             this.skuPending.insertCell(cell, x)
         } else if (cell.status === CellStatus.SELECTED) {
-            this.fenceGroup.fences[x].cells[y].status = CellStatus.WAITING
+            this.fenceGroup.setCellStatusByXY(x, y, CellStatus.WAITING)
             this.skuPending.removeCell(x)
         }
-
     }
 }

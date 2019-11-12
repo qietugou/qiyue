@@ -1,12 +1,38 @@
+<wxs src="../../wxs/price.wxs" module="p" />
 <view class="container">
-	<view>
-		<image src="" />
+	<view class="sku-preview">
+		<image class="sku-img" src="{{previewImg}}" />
+		<view class="sku-description">
+			<text class="title">{{title}}</text>
+			<view class="price-row">
+				<l-price
+				 value="{{p.mainPrice(price, discount_price)}}"
+				 color="#157658"
+				 value-size="28"
+				 unit-size="20"
+				 autofix
+				> </l-price>
+				<l-price
+                 wx:if="{{discount_price}}"
+				 value="{{p.slashedPrice(price, discount_price)}}"
+				 color="#999999"
+				 value-size="26"
+				 l-class="discount-price"
+				 deleted
+				/>
+                <view wx:if="{{stock && stock >= 10}}" class="stock">库存: {{stock}} 件</view>
+                <view wx:if="{{stock && stock < 10}}" class="stock-pinch">仅剩: {{stock}} 件</view>
+            </view>
+			<view class="sku-pending">
+				<text>请选择：</text>
+			</view>
+		</view>
+
 	</view>
-    <block wx:for="{{fences}}" wx:key="{{index}}">
-        <s-fence x="{{index}}" bind:celltap="onCellTap" fence="{{item}}"></s-fence>
-    </block>
-    <view class="counter-container">
-        
-    </view>
+	<view class="hr" />
+	<block wx:for="{{fences}}" wx:key="{{index}}">
+		<s-fence x="{{index}}" bind:celltap="onCellTap" fence="{{item}}" />
+	</block>
+	<view class="counter-container" />
 </view>
 
