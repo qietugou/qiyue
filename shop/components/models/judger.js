@@ -12,8 +12,20 @@ export default class Judger {
         this._initPathDict()
         this._initSkuPending()
     }
+    isSkuIntact() {
+       return this.skuPending.isIntact()
+    }
+    getCurrentValues() {
+        return this.skuPending.getCurrentSpecValues()
+    }
+    getMissingKeys() {
+        const missingKyesIndex = this.skuPending.getMissingSpecKeys()
+        return missingKyesIndex.map(i => {
+            return this.fenceGroup.fences[i].title
+        })
+    }
     _initSkuPending() {
-        this.skuPending = new SkuPending()
+        this.skuPending = new SkuPending(this.fenceGroup.fences.length)
         const defaultSku = this.fenceGroup.getDefaultSku()
         if (defaultSku) {
            this._initSelectedCell(defaultSku)
@@ -50,7 +62,11 @@ export default class Judger {
             }
         })
     }
-
+    getDeterminateSku() {
+        const code = this.skuPending.getSkuCode()
+        const sku = this.fenceGroup.getSku(code)
+        return sku
+    }
     _isInDict(path) {
         return this.pathDict.includes(path)
     }

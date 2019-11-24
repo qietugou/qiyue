@@ -21,6 +21,10 @@ Component({
    */
   methods: {
     onTap(evevt) {
+      const cell = this.properties.cell
+      if (cell.status == "forbidden") {
+        return
+      }
       this.triggerEvent('celltap', {
           cell: this.properties.cell,
           x: evevt.currentTarget.dataset.x,

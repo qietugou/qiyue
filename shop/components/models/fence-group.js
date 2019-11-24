@@ -9,6 +9,11 @@ export default class FenceGroup {
         this.skuList = spu.sku_list
         this.spu = spu
     }
+    getSku(code) {
+        const spuCode = this.spu.id + '$' + code
+        const sku = this.skuList.find(s => s.code == spuCode)
+        return sku ? sku : null
+    }
     getDefaultSku() {
         const defaultSkuId = this.spu.default_sku_id
         if (!defaultSkuId) {
@@ -47,9 +52,19 @@ export default class FenceGroup {
         transposData.forEach((fence) => {
             const fenceObj = this._createFence(fence);
             fenceObj.init()
+            if (this._hasSktchFence() && this._isSketchFence(fenceObj.id)) {
+                fenceObj.setFenceSketch(this.skuList)
+            }
             fences.push(fenceObj)
         })
         this.fences = fences
+    }
+    // 是否有可视规格
+    _hasSktchFence() {
+        return this.spu.sketch_spec_id ? true : false;
+    }
+    _isSketchFence(fenceId) { // 判断是否是可视规格
+        return this.spu.sketch_spec_id == fenceId
     }
     eachCell(cb) {
         for(let i = 0; i < this.fences.length; i++) {

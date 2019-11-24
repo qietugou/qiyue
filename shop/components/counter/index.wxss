@@ -1,0 +1,18 @@
+.all-background{
+    background-color: #f3f3f3 !important;
+    opacity: 0.8;
+}
+.container {
+    height: 46rpx !important;
+}
+.input-height {
+    line-height: 46rpx !important;
+    min-height: 46rpx !important;
+    background-color: transparent !important;
+    border-top: 1rpx solid  #f3f3f3 !important;
+    border-bottom: 1rpx solid  #f3f3f3 !important;
+    box-sizing: border-box !important;
+}
+.font-color {
+    color: #157658 !important;
+}

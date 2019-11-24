@@ -1,1 +1,27 @@
-<s-realm spu="{{spu}}"></s-realm>
+<view>
+    <swiper class="top" autoplay indicator-dots>
+        <block wx:for="{{spu.spu_img_list}}" wx:key="{{index}}">
+            <swiper-item>
+                <image class="top" src="{{item.img}}" mode="aspectFill" />
+            </swiper-item>
+        </block>
+    </swiper>
+    <s-spu-description spu="{{spu}}"></s-spu-description>
+    <view wx:if="{{!noSpec}}" class="sku-pending">
+        <text wx:if="{{!isSkuIntact}}">请选择：</text>
+        <text wx:else>已选：</text>
+        <text wx:if="{{!isSkuIntact}}">{{missingKeys}}</text>
+        <text wx:else>{{currentValue}}</text>
+    </view>
+</view>
+<l-popup show="{{showRealm}}" content-align="bottom" > 
+    <s-realm order-way="{{orderWay}}" spu="{{spu}}" />
+</l-popup>
+<s-tabbar
+ class="tarbar"
+ bind:gotohome="onGoToHome"
+ bind:gotocart="onGoToCart"
+ bind:addtocart="onAddToCart"
+ bind:buy="onBuy"
+/>
+
