@@ -17,7 +17,6 @@ Page({
     grid: [],
     ActivityD: null,
     themeESpu: [],
-    themeE: null,
     bannerG: null,
     spuPaging: null,
     loadingType: 'loading'
